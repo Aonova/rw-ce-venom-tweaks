@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>disable</Nullable>
+	<LangVersion>latest</LangVersion>
+    <BaseOutputPath>\bin</BaseOutputPath>
+	 <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
+    <PackageReference Include="Lib.Harmony" Version="2.4.2" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command=":: 1. Ensure the Assemblies folder exists in the root mod directory&#xA;if not exist &quot;$(ProjectDir)..\..\Assemblies&quot; mkdir &quot;$(ProjectDir)..\..\Assemblies&quot;&#xA;&#xA;:: 2. Copy the compiled DLL from the bin folder to the Assemblies folder&#xA;copy /Y &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(ProjectDir)..\..\Assemblies\&quot;&#xA;&#xA;:: Call your deploy script to move it to the RimWorld Mods folder&#xA;call &quot;$(ProjectDir)..\..\deploy.bat&quot;" />
+  </Target>
+
+</Project>
